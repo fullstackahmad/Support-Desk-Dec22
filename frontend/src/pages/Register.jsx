@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {toast} from 'react-toastify'
 import {FaUser} from 'react-icons/fa'
 
 function Register() {
@@ -18,6 +19,15 @@ function Register() {
     }))
    }
 
+   const onSubmit = (e) => {
+    e.preventDefault()
+
+
+    if(password !== password2) {
+      toast.error('Password do not match')
+    }
+   }
+
   return (
     <>
       <section className="heading">
@@ -28,7 +38,7 @@ function Register() {
       </section>
 
       <section className='form'>
-        <form>
+        <form onSubmit={onSubmit}>
 
           <div className="form-group">
             <input 
@@ -39,6 +49,7 @@ function Register() {
               value={name} 
               onChange={onChange} 
               placeholder='Enter your name'
+              required
             />
           </div>
 
@@ -51,6 +62,7 @@ function Register() {
               value={email} 
               onChange={onChange} 
               placeholder='Enter your email'
+              required
             />
           </div>
 
@@ -63,6 +75,7 @@ function Register() {
               value={password} 
               onChange={onChange} 
               placeholder='Enter your password'
+              required
             />
           </div>
 
@@ -75,6 +88,7 @@ function Register() {
               value={password2} 
               onChange={onChange} 
               placeholder='Confirm Password'
+              required
             />
           </div>
           <div className="form-group">
