@@ -1,7 +1,7 @@
 {
   "name": "support-desk",
   "version": "1.0.0",
-  "description": "Support Ticket App Nov22",
+  "description": "Support Ticket App 3 Dec22",
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
