@@ -12,6 +12,7 @@ const initialState = {
   message: ''
 }
 
+
 // REGISTER a new user
 export const register = createAsyncThunk(
   // action type string
@@ -37,6 +38,16 @@ export const register = createAsyncThunk(
   }
  )
 
+ // LOGOUT a user
+ export const logout = createAsyncThunk(
+  // action type string
+  'auth/logout',
+  // callback function (referred to as a payloadCreator)
+  async () => {
+    await authService.logout()
+  }
+ )
+
 
 // THE AUTH SLICE
 export const authSlice = createSlice({
@@ -50,6 +61,7 @@ export const authSlice = createSlice({
       state.message = ''
     }
   },
+  // AsyncThunk stuff goes into this extra reducers
   extraReducers: (builder) => { 
     builder
       .addCase(register.pending, (state) => { 
@@ -64,6 +76,9 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+        state.user = null
+       })
+      .addCase(logout.fulfilled, (state) => { 
         state.user = null
        })
   }

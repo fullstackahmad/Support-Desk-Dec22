@@ -18,6 +18,9 @@ function Register() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  // useSelector - what is this ?
+  // basically useSelector is used to connect REDUX STATE with REACT COMPONENTS
+  // it returns a REDUX STATE so that we can store the values in REACT COMPONENTS
   const {user, isError, isLoading, isSuccess, message} = useSelector(
     (state) => state.auth
   )
@@ -32,8 +35,15 @@ function Register() {
       navigate('/')
     }
 
+    // What is this ? DISPATCH
+    // similar to useSelector hook but works vice-versa
+    // DISPTACH is also a react-redux library/tool
     dispatch(reset())
-   }, [isError, isSuccess, user, message, navigate, dispatch])
+    // it dispatches the state/value/action from REACT COMPONENT to REDUX
+    // so that we can use it with REDUX ACTION/REDUCER
+    // in our case we are dispatching reset action call to "authSlice.actions"
+    // which we imported already in this "Register JSX REACT component"
+  }, [isError, isSuccess, user, message, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -54,7 +64,15 @@ function Register() {
         email,
         password,
       }
+
+      // What is this ? DISPATCH
+      // similar to useSelector hook but works vice-versa
+      // DISPTACH is also a react-redux library/tool
       dispatch(register(userData))
+      // it dispatches the state/value from REACT COMPONENT to REDUX
+      // so that we can use it with REDUX ACTION/REDUCER
+      // in our case we are dispatching REGISTER ASYNC FUNCTION to "authSlice"
+      // which we imported already in this "Register JSX REACT component"
     }
    }
 

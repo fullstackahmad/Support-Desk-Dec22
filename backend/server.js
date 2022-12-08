@@ -10,8 +10,8 @@ const app = express()
 connectDB()
 
 // - middleware to parse the body data
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.json()) // returns middleware that only parse Json
+app.use(express.urlencoded({extended: false})) // returns middleware that only parse urlencoded bodies
 
 
 app.get('/', (req, res) => {
