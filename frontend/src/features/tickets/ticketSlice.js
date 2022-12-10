@@ -27,6 +27,25 @@ export const createTicket = createAsyncThunk(
   }
  )
 
+
+// GET TICKETS (protected route)
+export const getTickets = createAsyncThunk(
+  // action type string
+  'tickets/getAll',
+  // callback function (referred to as a payloadCreator)
+  async (_, thunkAPI) => {
+    // ^ we passed _ b/c we still need thunkAPI to get user token ( above line ^ )
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await ticketService.getTickets(token)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+ )
+
+
 export const ticketSlice = createSlice({
   name: 'ticket',
   initialState,
@@ -47,11 +66,23 @@ export const ticketSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(getTickets.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getTickets.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.tickets = action.payload
+      })
+      .addCase(getTickets.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
   },
 })
 
 // {reset} is an ActionCreatorWithoutPayload
 export const {reset} = ticketSlice.actions
-
 
 export default ticketSlice.reducer
